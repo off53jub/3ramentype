@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Number Classifier</title>
+    <link rel="stylesheet" href="./static/stylesheet.css">
+</head>
+<body>
+    <header>   
+        <img class="header_img" src="https://i0.wp.com/mlb-nff-nba.com/wp-content/uploads/2018/11/66c19942ab4ba346fdb64ccc04cde373-2.png?w=541&ssl=1" alt="Aidemy">
+        <a class="header-logo" href="#">ラーメンを見た目で分別</a>
+    </header>
+
+    <div class="main">    
+        <h2> AIが送信されたラーメンの画像を識別します</h2>
+        <p>画像を送信してください</p>
+        
+        <form method="POST" enctype="multipart/form-data">
+            <input class="file_choose" type="file" name="file">
+            <input class="btn" value="submit!" type="submit">
+        </form>
+        <div class="answer">{{answer}}</div>
+    </div>
+
+    <footer>
+        <img class="footer_img" src="https://4.bp.blogspot.com/-gybqqjR5o9A/UZmCNjgj14I/AAAAAAAATd4/N2CK8u2Vbsk/s400/cup_noodle.png" alt="Aidemy">
+         
+    </footer>
+</body>
+</html>
