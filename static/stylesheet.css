@@ -22,13 +22,15 @@ header {
     height: 370px;
 }
 .mask-bg {
-    color: transparent;
+    color: #444444;
     display: inline-block;
     font-size: 36px;
     font-weight: bold;
     overflow: hidden;
     position: relative;
     transition: color 0ms 450ms;
+    margin: 70px 0px 30px 0px;
+    text-align: center;
   }
   .mask-bg::after {
     background: linear-gradient(to right, #362ae0 0%,#3b79cc 50%,#42d3ed 100%);
@@ -54,27 +56,6 @@ h2 {
     text-align: center;
   }
   
-  h2:before,
-  h2:after {
-    font-family: 'Font Awesome 5 Free';
-    line-height: 1;
-    position: absolute;
-    top: calc(50% - .5em);
-    color: #eb6100;
-    text-align: center;
-  }
-  
-  h2:before {
-    left: 0;
-    content: '\f101';
-    text-align: center;
-  }
-  
-  h2:after {
-    right: 0;
-    content: '\f100';
-    text-align: center;
-  }
 
 p {
     color: #444444;
