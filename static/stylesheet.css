@@ -6,20 +6,24 @@ header {
     flex-direction: row-reverse;
     justify-content: space-between;
 }
-.bg_pattern {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #ffe9a7;
-    opacity: 0.4;
-    z-index: -1;
-  }
-  .Lines_v4 {
-    background-size: 40px 40px;
-    background-image:  repeating-linear-gradient(to right, #ffc107, #ffc107 2px, #ffe9a7 2px, #ffe9a7);
-  }
+.fadeUp{
+    animation-name:fadeUpAnime;
+    animation-duration:0.5s;
+    animation-fill-mode:forwards;
+    opacity:0;
+    }
+    
+    @keyframes fadeUpAnime{
+      from {
+        opacity: 0;
+      transform: translateY(100px);
+      }
+    
+      to {
+        opacity: 1;
+      transform: translateY(0);
+      }
+    }
 .header-logo {
     color: #fff;
     font-size: 25px;
@@ -36,7 +40,7 @@ header {
 }
 
 h2 {
-    color: #444444;
+    color: #000000;
     margin: 70px 0px 30px 0px;
     text-align: center;
   }
