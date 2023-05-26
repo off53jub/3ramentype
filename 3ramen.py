@@ -11,7 +11,7 @@ import numpy as np
 
 
 classes = ["醤油","味噌","塩"]
-image_size = 50
+image_size = 200
 
 
 UPLOAD_FOLDER = "uploads"
