@@ -60,16 +60,19 @@ h2 {
     position: absolute;
     top: calc(50% - .5em);
     color: #eb6100;
+    text-align: center;
   }
   
   h2:before {
     left: 0;
     content: '\f101';
+    text-align: center;
   }
   
   h2:after {
     right: 0;
     content: '\f100';
+    text-align: center;
   }
 
 p {
