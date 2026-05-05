@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Audubon – デザインプレビュー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* === Variables === */
+:root {
+    --color-primary:    #1a1a1a;
+    --color-accent:     #b8966a;
+    --color-bg:         #ffffff;
+    --color-bg-alt:     #f5f4f0;
+    --color-text:       #2c2c2c;
+    --color-text-muted: #7a7a7a;
+    --color-border:     #e5e0d8;
+    --font-ja:          'Noto Sans JP', sans-serif;
+    --font-en:          'Cormorant Garamond', serif;
+    --header-height:    70px;
+    --transition:       0.3s ease;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-ja); font-size: 15px; line-height: 1.8; color: var(--color-text); background: var(--color-bg); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+
+/* === Layout === */
+.container { width: min(1160px, 100% - 40px); margin-inline: auto; }
+
+/* === Header === */
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--header-height); background: rgba(26,26,26,0.96); backdrop-filter: blur(6px); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; padding: 0 30px; }
+.site-logo { font-family: var(--font-en); font-size: 22px; font-weight: 400; letter-spacing: 0.1em; color: #fff; }
+.nav-list { display: flex; gap: 32px; align-items: center; }
+.nav-list a { font-family: var(--font-en); font-size: 14px; letter-spacing: 0.12em; color: rgba(255,255,255,0.85); transition: color var(--transition); }
+.nav-list a:hover { color: var(--color-accent); }
+.menu-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 30px; height: 30px; background: none; border: none; cursor: pointer; }
+.menu-toggle span { display: block; width: 100%; height: 2px; background: #fff; transition: var(--transition); }
+.menu-toggle.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-toggle.is-open span:nth-child(2) { opacity: 0; }
+.menu-toggle.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* === Hero Slider === */
+.hero-slider { position: relative; width: 100%; height: calc(100svh - var(--header-height)); min-height: 420px; max-height: 740px; margin-top: var(--header-height); overflow: hidden; background: var(--color-primary); }
+.slide { position: absolute; inset: 0; display: flex; opacity: 0; pointer-events: none; transition: opacity 0.8s ease; }
+.slide.is-active { opacity: 1; pointer-events: auto; position: relative; }
+.slide__inner { display: flex; width: 100%; height: 100%; }
+.slide__text { flex: 0 0 50%; display: flex; flex-direction: column; justify-content: center; padding: 60px 56px; background: var(--color-primary); color: #fff; }
+.slide__cast { font-size: 13px; font-weight: 300; letter-spacing: 0.15em; color: var(--color-accent); margin-bottom: 16px; }
+.slide__role { font-size: clamp(22px, 3vw, 36px); font-weight: 500; line-height: 1.4; margin-bottom: 8px; }
+.slide__role-suffix { display: block; font-size: clamp(14px, 1.8vw, 20px); font-weight: 300; color: rgba(255,255,255,0.7); margin-top: 4px; letter-spacing: 0.05em; }
+.slide__show { font-family: var(--font-en); font-size: clamp(14px, 1.6vw, 18px); font-weight: 300; letter-spacing: 0.08em; color: rgba(255,255,255,0.6); margin-top: 20px; }
+.slide__period { font-size: 12px; color: rgba(255,255,255,0.45); letter-spacing: 0.08em; margin-top: 8px; }
+.slide__link { display: inline-block; margin-top: 32px; padding: 12px 28px; border: 1px solid var(--color-accent); color: var(--color-accent); font-size: 12px; letter-spacing: 0.12em; transition: background var(--transition), color var(--transition); align-self: flex-start; }
+.slide__link:hover { background: var(--color-accent); color: #fff; }
+.slide__poster { flex: 0 0 50%; overflow: hidden; }
+.slide__poster img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+
+/* Poster placeholder（デモ用） */
+.poster-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-family: var(--font-en); font-size: 13px; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); }
+
+.slider-controls { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; z-index: 10; }
+.slider-btn { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 50%; color: #fff; cursor: pointer; transition: background var(--transition); }
+.slider-btn:hover { background: rgba(255,255,255,0.2); }
+.slider-btn svg { width: 16px; height: 16px; }
+.slider-dots { display: flex; gap: 8px; }
+.slider-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); border: none; cursor: pointer; transition: background var(--transition), transform var(--transition); }
+.slider-dot.is-active { background: var(--color-accent); transform: scale(1.3); }
+
+/* === Sections === */
+.section { padding: 90px 0; }
+.section--alt { background: var(--color-bg-alt); }
+.section-title { font-family: var(--font-en); font-size: clamp(28px, 4vw, 42px); font-weight: 300; letter-spacing: 0.1em; text-align: center; margin-bottom: 50px; color: var(--color-primary); }
+.section-more { text-align: center; margin-top: 48px; }
+.btn-more { display: inline-block; padding: 14px 40px; border: 1px solid var(--color-primary); color: var(--color-primary); font-family: var(--font-en); font-size: 13px; letter-spacing: 0.14em; transition: background var(--transition), color var(--transition); }
+.btn-more:hover { background: var(--color-primary); color: #fff; }
+
+/* === News === */
+.news-grid { display: grid; gap: 32px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.news-card { display: flex; flex-direction: column; border: 1px solid var(--color-border); overflow: hidden; transition: box-shadow var(--transition); }
+.news-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.news-card__thumb { overflow: hidden; aspect-ratio: 16/9; background: var(--color-bg-alt); }
+.news-card__thumb .img-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--color-border); font-size: 12px; }
+.news-card__body { padding: 20px; flex: 1; }
+.news-card__date { display: block; font-size: 11px; letter-spacing: 0.1em; color: var(--color-text-muted); margin-bottom: 8px; }
+.news-card__title { font-size: 14px; font-weight: 500; line-height: 1.6; }
+
+/* === Actors === */
+.actor-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+.actor-card { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; transition: opacity var(--transition); cursor: pointer; }
+.actor-card:hover { opacity: 0.8; }
+.actor-card__photo { width: 100%; aspect-ratio: 3/4; overflow: hidden; background: var(--color-bg-alt); display: flex; align-items: flex-end; justify-content: center; }
+.actor-photo-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.actor-photo-ph svg { width: 60%; height: 60%; opacity: 0.2; }
+.actor-card__name { font-size: 13px; font-weight: 500; letter-spacing: 0.05em; }
+
+/* === Works === */
+.work-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+.work-card { display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--color-border); transition: box-shadow var(--transition); cursor: pointer; }
+.work-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.work-card__poster { aspect-ratio: 2/3; overflow: hidden; background: var(--color-bg-alt); }
+.work-poster-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.work-poster-ph svg { width: 40%; opacity: 0.15; }
+.work-card__info { padding: 16px; }
+.work-card__type { font-size: 10px; letter-spacing: 0.12em; color: var(--color-accent); text-transform: uppercase; }
+.work-card__title { font-size: 13px; font-weight: 500; margin-top: 6px; line-height: 1.5; }
+.work-card__period { font-size: 11px; color: var(--color-text-muted); margin-top: 4px; }
+
+/* === Cast Grid (Footer) === */
+.cast-grid-section { background: var(--color-primary); padding: 60px 0; }
+.cast-grid-title { font-family: var(--font-en); font-size: 14px; font-weight: 300; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); text-align: center; margin-bottom: 32px; text-transform: uppercase; }
+.cast-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px 24px; }
+.cast-grid__item { text-align: center; }
+.cast-grid__link { display: flex; flex-direction: column; align-items: center; gap: 8px; transition: opacity var(--transition); cursor: pointer; }
+.cast-grid__link:hover { opacity: 0.7; }
+.cast-grid__photo { width: 72px; height: 72px; border-radius: 50%; overflow: hidden; background: #3a3a3a; display: flex; align-items: center; justify-content: center; }
+.cast-grid__photo svg { width: 60%; height: 60%; opacity: 0.3; }
+.cast-grid__name { font-size: 11px; letter-spacing: 0.06em; color: rgba(255,255,255,0.7); white-space: nowrap; }
+
+/* === Footer === */
+.site-footer { background: #111; padding: 36px 0; }
+.footer-inner { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.footer-logo { font-family: var(--font-en); font-size: 18px; font-weight: 300; letter-spacing: 0.12em; color: rgba(255,255,255,0.6); }
+.footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 24px; }
+.footer-nav a { font-size: 11px; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); transition: color var(--transition); }
+.footer-nav a:hover { color: rgba(255,255,255,0.7); }
+.footer-copy { font-size: 10px; letter-spacing: 0.08em; color: rgba(255,255,255,0.2); }
+
+/* === Mobile menu overlay === */
+.nav-overlay { display: none; position: fixed; inset: 0; background: rgba(26,26,26,0.97); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
+.nav-overlay.is-open { display: flex; }
+.nav-overlay a { font-family: var(--font-en); font-size: 22px; font-weight: 300; letter-spacing: 0.14em; color: rgba(255,255,255,0.85); transition: color var(--transition); }
+.nav-overlay a:hover { color: var(--color-accent); }
+
+/* === Demo Badge === */
+.demo-badge { position: fixed; bottom: 16px; right: 16px; background: var(--color-accent); color: #fff; font-size: 11px; letter-spacing: 0.1em; padding: 8px 14px; border-radius: 2px; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.2); }
+
+/* === Responsive === */
+@media (max-width: 960px) {
+    .main-nav { display: none; }
+    .menu-toggle { display: flex; }
+    .slide__text { padding: 36px 28px; }
+    .slide__role { font-size: 20px; }
+}
+@media (max-width: 600px) {
+    :root { --header-height: 56px; }
+    .hero-slider { height: auto; min-height: 0; max-height: none; }
+    .slide__inner { flex-direction: column; }
+    .slide__poster { flex: 0 0 auto; height: 240px; order: -1; }
+    .slide__text { flex: 0 0 auto; padding: 28px 20px; }
+    .actor-grid { grid-template-columns: repeat(3, 1fr); }
+    .work-grid  { grid-template-columns: repeat(2, 1fr); }
+    .news-grid  { grid-template-columns: 1fr; }
+    .section    { padding: 60px 0; }
+    .cast-grid__photo { width: 56px; height: 56px; }
+    .cast-grid__name  { font-size: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ナビゲーション -->
+<header class="site-header" id="siteHeader">
+    <div class="header-inner">
+        <a href="#" class="site-logo">Studio Audubon</a>
+        <nav class="main-nav">
+            <ul class="nav-list">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">News</a></li>
+                <li><a href="#">Actors</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Works</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="menu-toggle" id="menuToggle" aria-label="メニュー">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<!-- ヘッダースライダー -->
+<div class="hero-slider" id="heroSlider">
+
+    <!-- スライド1 -->
+    <div class="slide is-active">
+        <div class="slide__inner">
+            <div class="slide__text">
+                <p class="slide__cast">山田 太郎</p>
+                <h2 class="slide__role">
+                    アルバス・ポッター
+                    <span class="slide__role-suffix">役出演</span>
+                </h2>
+                <p class="slide__show">Harry Potter and the Cursed Child</p>
+                <p class="slide__period">2024年3月1日〜3月31日 / 東京芸術劇場</p>
+                <a href="#" class="slide__link">詳細を見る</a>
+            </div>
+            <div class="slide__poster">
+                <div class="poster-ph" style="background:linear-gradient(135deg,#1e2a3a 0%,#0d1b2a 100%);">
+                    <svg width="80" height="120" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="80" height="120" rx="2" fill="rgba(255,255,255,0.04)"/>
+                        <text x="40" y="66" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(255,255,255,0.25)" letter-spacing="1">POSTER</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド2 -->
+    <div class="slide">
+        <div class="slide__inner">
+            <div class="slide__text">
+                <p class="slide__cast">鈴木 花子</p>
+                <h2 class="slide__role">
+                    ジュリエット
+                    <span class="slide__role-suffix">役出演</span>
+                </h2>
+                <p class="slide__show">Romeo and Juliet</p>
+                <p class="slide__period">2024年5月10日〜5月25日 / 新国立劇場</p>
+                <a href="#" class="slide__link">詳細を見る</a>
+            </div>
+            <div class="slide__poster">
+                <div class="poster-ph" style="background:linear-gradient(135deg,#2a1a1a 0%,#1a0d0d 100%);">
+                    <svg width="80" height="120" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="80" height="120" rx="2" fill="rgba(255,255,255,0.04)"/>
+                        <text x="40" y="66" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(255,255,255,0.25)" letter-spacing="1">POSTER</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド3 -->
+    <div class="slide">
+        <div class="slide__inner">
+            <div class="slide__text">
+                <p class="slide__cast">田中 一郎</p>
+                <h2 class="slide__role">
+                    マクベス
+                    <span class="slide__role-suffix">役出演</span>
+                </h2>
+                <p class="slide__show">Macbeth</p>
+                <p class="slide__period">2024年7月1日〜7月20日 / Bunkamura シアターコクーン</p>
+                <a href="#" class="slide__link">詳細を見る</a>
+            </div>
+            <div class="slide__poster">
+                <div class="poster-ph" style="background:linear-gradient(135deg,#1a1a2a 0%,#0d0d1a 100%);">
+                    <svg width="80" height="120" viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="80" height="120" rx="2" fill="rgba(255,255,255,0.04)"/>
+                        <text x="40" y="66" text-anchor="middle" font-family="serif" font-size="11" fill="rgba(255,255,255,0.25)" letter-spacing="1">POSTER</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slider-controls">
+        <button class="slider-btn" id="sliderPrev" aria-label="前へ">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <div class="slider-dots" id="sliderDots">
+            <button class="slider-dot is-active"></button>
+            <button class="slider-dot"></button>
+            <button class="slider-dot"></button>
+        </div>
+        <button class="slider-btn" id="sliderNext" aria-label="次へ">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+    </div>
+</div>
+
+<main>
+
+<!-- ニュース -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">News</h2>
+        <div class="news-grid">
+            <article class="news-card">
+                <div class="news-card__thumb"><div class="img-ph">IMAGE</div></div>
+                <div class="news-card__body">
+                    <time class="news-card__date">2024.03.15</time>
+                    <h3 class="news-card__title">山田太郎、ハリー・ポッターと呪いの子 出演決定のお知らせ</h3>
+                </div>
+            </article>
+            <article class="news-card">
+                <div class="news-card__thumb"><div class="img-ph">IMAGE</div></div>
+                <div class="news-card__body">
+                    <time class="news-card__date">2024.02.28</time>
+                    <h3 class="news-card__title">鈴木花子、舞台「ロミオとジュリエット」出演情報</h3>
+                </div>
+            </article>
+            <article class="news-card">
+                <div class="news-card__thumb"><div class="img-ph">IMAGE</div></div>
+                <div class="news-card__body">
+                    <time class="news-card__date">2024.02.10</time>
+                    <h3 class="news-card__title">スタジオ・オードボン 新メンバー加入のお知らせ</h3>
+                </div>
+            </article>
+            <article class="news-card">
+                <div class="news-card__thumb"><div class="img-ph">IMAGE</div></div>
+                <div class="news-card__body">
+                    <time class="news-card__date">2024.01.20</time>
+                    <h3 class="news-card__title">田中一郎 舞台「マクベス」キャスト発表</h3>
+                </div>
+            </article>
+        </div>
+        <div class="section-more"><a href="#" class="btn-more">ニュース一覧</a></div>
+    </div>
+</section>
+
+<!-- アクター -->
+<section class="section section--alt">
+    <div class="container">
+        <h2 class="section-title">Actors</h2>
+        <div class="actor-grid">
+            <!-- Actor placeholder SVG -->
+            <script>
+            var actorNames = ["山田 太郎","鈴木 花子","田中 一郎","佐藤 美咲","高橋 健","伊藤 涼子"];
+            actorNames.forEach(function(name) {
+                document.write('<a href="#" class="actor-card"><div class="actor-card__photo"><div class="actor-photo-ph"><svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="38" r="20" fill="#ccc"/><ellipse cx="50" cy="80" rx="30" ry="22" fill="#ccc"/></svg></div></div><p class="actor-card__name">' + name + '</p></a>');
+            });
+            </script>
+        </div>
+        <div class="section-more"><a href="#" class="btn-more">アクター一覧</a></div>
+    </div>
+</section>
+
+<!-- ワークス -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Works</h2>
+        <div class="work-grid">
+            <script>
+            var works = [
+                {title:"ハリー・ポッターと呪いの子", type:"演劇", period:"2024.3"},
+                {title:"ロミオとジュリエット",        type:"演劇", period:"2024.5"},
+                {title:"マクベス",                   type:"演劇", period:"2024.7"},
+                {title:"春の目覚め",                  type:"ミュージカル", period:"2023.11"},
+                {title:"海辺のカフカ",                type:"演劇", period:"2023.8"},
+                {title:"コーラスライン",               type:"ミュージカル", period:"2023.6"},
+            ];
+            works.forEach(function(w) {
+                document.write('<a href="#" class="work-card"><div class="work-card__poster"><div class="work-poster-ph"><svg viewBox="0 0 60 90" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="90" rx="2" fill="#e0dbd2"/></svg></div></div><div class="work-card__info"><span class="work-card__type">' + w.type + '</span><h3 class="work-card__title">' + w.title + '</h3><p class="work-card__period">' + w.period + '</p></div></a>');
+            });
+            </script>
+        </div>
+        <div class="section-more"><a href="#" class="btn-more">ワークス一覧</a></div>
+    </div>
+</section>
+
+</main>
+
+<!-- フッターキャストグリッド -->
+<section class="cast-grid-section">
+    <div class="container">
+        <h2 class="cast-grid-title">Cast</h2>
+        <ul class="cast-grid">
+            <script>
+            var castNames = ["山田 太郎","鈴木 花子","田中 一郎","佐藤 美咲","高橋 健","伊藤 涼子","渡辺 翔","小林 奈々","加藤 誠","吉田 由美","松本 龍","井上 春香","木村 拓也","清水 恵","山口 勇","橋本 彩"];
+            castNames.forEach(function(name) {
+                document.write('<li class="cast-grid__item"><div class="cast-grid__link"><div class="cast-grid__photo"><svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="22" r="12" fill="#888"/><ellipse cx="30" cy="48" rx="18" ry="13" fill="#888"/></svg></div><span class="cast-grid__name">' + name + '</span></div></li>');
+            });
+            </script>
+        </ul>
+    </div>
+</section>
+
+<!-- フッター -->
+<footer class="site-footer">
+    <div class="footer-inner">
+        <span class="footer-logo">Studio Audubon</span>
+        <nav class="footer-nav">
+            <a href="#">アクター</a>
+            <a href="#">ワークス</a>
+            <a href="#">ニュース</a>
+            <a href="#">アバウト</a>
+            <a href="#">コンタクト</a>
+        </nav>
+        <p class="footer-copy">&copy; 2024 Studio Audubon. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<!-- モバイルメニューオーバーレイ -->
+<nav class="nav-overlay" id="navOverlay">
+    <a href="#">Home</a>
+    <a href="#">News</a>
+    <a href="#">Actors</a>
+    <a href="#">About</a>
+    <a href="#">Works</a>
+    <a href="#">Contact</a>
+</nav>
+
+<div class="demo-badge">DESIGN PREVIEW</div>
+
+<script>
+(function () {
+    // Slider
+    var slider  = document.getElementById('heroSlider');
+    var slides  = slider.querySelectorAll('.slide');
+    var dots    = slider.querySelectorAll('.slider-dot');
+    var btnPrev = document.getElementById('sliderPrev');
+    var btnNext = document.getElementById('sliderNext');
+    var current = 0;
+    var total   = slides.length;
+    var timer;
+
+    function goTo(index) {
+        slides[current].classList.remove('is-active');
+        dots[current].classList.remove('is-active');
+        current = (index + total) % total;
+        slides[current].classList.add('is-active');
+        dots[current].classList.add('is-active');
+    }
+
+    function startAuto() { timer = setInterval(function() { goTo(current + 1); }, 5000); }
+    function resetAuto()  { clearInterval(timer); startAuto(); }
+
+    btnNext.addEventListener('click', function() { goTo(current + 1); resetAuto(); });
+    btnPrev.addEventListener('click', function() { goTo(current - 1); resetAuto(); });
+    dots.forEach(function(d, i) { d.addEventListener('click', function() { goTo(i); resetAuto(); }); });
+
+    var tx = 0;
+    slider.addEventListener('touchstart', function(e) { tx = e.changedTouches[0].clientX; }, {passive:true});
+    slider.addEventListener('touchend',   function(e) {
+        var diff = tx - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) { goTo(diff > 0 ? current + 1 : current - 1); resetAuto(); }
+    }, {passive:true});
+
+    startAuto();
+
+    // Mobile menu
+    var toggle  = document.getElementById('menuToggle');
+    var overlay = document.getElementById('navOverlay');
+    toggle.addEventListener('click', function() {
+        var open = overlay.classList.toggle('is-open');
+        toggle.classList.toggle('is-open', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+    });
+    overlay.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A' || e.target === overlay) {
+            overlay.classList.remove('is-open');
+            toggle.classList.remove('is-open');
+            document.body.style.overflow = '';
+        }
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            overlay.classList.remove('is-open');
+            toggle.classList.remove('is-open');
+            document.body.style.overflow = '';
+        }
+    });
+})();
+</script>
+</body>
+</html>
