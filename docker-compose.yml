@@ -1,0 +1,32 @@
+services:
+  db:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:6.7-php8.3-apache
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "8888:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DEBUG: "1"
+    volumes:
+      - ./studio-audubon:/var/www/html/wp-content/themes/studio-audubon
+      - wp_data:/var/www/html
+
+volumes:
+  db_data:
+  wp_data:
