@@ -1,0 +1,75 @@
+{
+    "key": "group_work_fields",
+    "title": "作品情報",
+    "fields": [
+        {
+            "key": "field_work_type",
+            "label": "種別",
+            "name": "work_type",
+            "type": "select",
+            "instructions": "作品の種別を選択してください",
+            "required": 0,
+            "choices": {
+                "演劇": "演劇",
+                "ミュージカル": "ミュージカル",
+                "映画": "映画",
+                "TV": "TV",
+                "CM": "CM",
+                "Web": "Web",
+                "その他": "その他"
+            },
+            "default_value": "",
+            "allow_null": 1,
+            "multiple": 0,
+            "return_format": "value"
+        },
+        {
+            "key": "field_work_period",
+            "label": "公演・放映期間",
+            "name": "work_period",
+            "type": "text",
+            "instructions": "例：2024年3月1日〜3月31日",
+            "required": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_work_venue",
+            "label": "会場・放映局",
+            "name": "work_venue",
+            "type": "text",
+            "instructions": "例：東京芸術劇場 プレイハウス",
+            "required": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_work_cast_list",
+            "label": "出演キャスト",
+            "name": "work_cast_list",
+            "type": "relationship",
+            "instructions": "この作品に出演するキャストを選択してください",
+            "required": 0,
+            "post_type": ["actor"],
+            "filters": ["search"],
+            "return_format": "object",
+            "min": 0,
+            "max": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "work"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "各作品の詳細情報を管理します。ポスター画像は「アイキャッチ画像」からアップロードしてください。"
+}
