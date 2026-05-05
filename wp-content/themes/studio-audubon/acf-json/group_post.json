@@ -4,14 +4,12 @@
     "fields": [
         {
             "key": "field_event_date",
-            "label": "公演日 / 放映日",
+            "label": "日付テキスト",
             "name": "event_date",
-            "type": "date_picker",
-            "instructions": "投稿日とは別に、公演日・放映日などを入れたい場合に指定してください。空欄なら投稿日が使われます。",
+            "type": "text",
+            "instructions": "一覧・詳細ページに表示する日付文字列を自由に入力してください（例：2024.05.10、2024年5〜6月、随時）。空欄のときは投稿日が表示されます。",
             "required": 0,
-            "display_format": "Y/m/d",
-            "return_format": "Y-m-d",
-            "first_day": 0
+            "placeholder": "例：2024.05.10"
         },
         {
             "key": "field_event_label",
@@ -49,5 +47,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "Information（投稿）に紐づく公演日・放映日などの追加情報。"
+    "description": "Information（投稿）に紐づく日付テキスト・種別ラベル。"
 }

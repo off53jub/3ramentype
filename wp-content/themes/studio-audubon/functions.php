@@ -152,13 +152,11 @@ function sa_thumbnail_url($post_id, $size = 'large') {
     return $src ? $src[0] : '';
 }
 
-// イベント日付（無ければ投稿日）
+// イベント日付テキスト（無ければ投稿日）
 function sa_event_date($post_id = null, $format = 'Y.m.d') {
     $post_id = $post_id ?: get_the_ID();
     $date    = sa_field('event_date', $post_id);
-    if ($date) {
-        return mysql2date($format, $date);
-    }
+    if ($date) return $date;
     return get_the_date($format, $post_id);
 }
 
