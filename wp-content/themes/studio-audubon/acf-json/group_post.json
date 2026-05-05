@@ -1,0 +1,51 @@
+{
+    "key": "group_post_fields",
+    "title": "Information 補足情報",
+    "fields": [
+        {
+            "key": "field_event_date",
+            "label": "日付テキスト",
+            "name": "event_date",
+            "type": "text",
+            "instructions": "一覧・詳細ページに表示する日付文字列を自由に入力してください（例：2024.05.10、2024年5〜6月、随時）。空欄のときは投稿日が表示されます。",
+            "required": 0,
+            "placeholder": "例：2024.05.10"
+        },
+        {
+            "key": "field_event_label",
+            "label": "種別ラベル",
+            "name": "event_label",
+            "type": "select",
+            "instructions": "日付の前に表示するラベル（例：「公演 2024.05.10」）。空欄でも構いません。",
+            "required": 0,
+            "choices": {
+                "公演": "公演",
+                "放映": "放映",
+                "配信開始": "配信開始",
+                "公開": "公開",
+                "発売": "発売"
+            },
+            "default_value": "",
+            "allow_null": 1,
+            "multiple": 0,
+            "return_format": "value"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Information（投稿）に紐づく日付テキスト・種別ラベル。"
+}
