@@ -3,6 +3,15 @@
     "title": "作品情報",
     "fields": [
         {
+            "key": "field_work_caption",
+            "label": "キャプションテキスト",
+            "name": "caption_text",
+            "type": "text",
+            "instructions": "Works一覧でポスター下に表示する文言（例：山田太郎 出演）",
+            "required": 0,
+            "placeholder": "山田太郎 出演"
+        },
+        {
             "key": "field_work_type",
             "label": "種別",
             "name": "work_type",

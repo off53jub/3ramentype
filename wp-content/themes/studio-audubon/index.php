@@ -5,7 +5,7 @@
         <h1 class="page-title">
             <?php
             if (is_home()) {
-                echo 'ニュース';
+                echo 'Information';
             } elseif (is_archive()) {
                 the_archive_title();
             } else {
@@ -16,7 +16,10 @@
 
         <?php if (have_posts()) : ?>
             <div class="news-grid">
-                <?php while (have_posts()) : the_post(); ?>
+                <?php while (have_posts()) : the_post();
+                    $event_label = sa_event_label();
+                    $event_date  = sa_event_date();
+                ?>
                     <article class="news-card">
                         <?php if (has_post_thumbnail()) : ?>
                             <a href="<?php the_permalink(); ?>" class="news-card__thumb">
@@ -24,9 +27,14 @@
                             </a>
                         <?php endif; ?>
                         <div class="news-card__body">
-                            <time class="news-card__date" datetime="<?php echo get_the_date('Y-m-d'); ?>">
-                                <?php echo get_the_date('Y.m.d'); ?>
-                            </time>
+                            <div class="news-card__meta">
+                                <?php if ($event_label) : ?>
+                                    <span class="news-card__label"><?php echo esc_html($event_label); ?></span>
+                                <?php endif; ?>
+                                <time class="news-card__date" datetime="<?php echo esc_attr(get_the_date('Y-m-d')); ?>">
+                                    <?php echo esc_html($event_date); ?>
+                                </time>
+                            </div>
                             <h2 class="news-card__title">
                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                             </h2>

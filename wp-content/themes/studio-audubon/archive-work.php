@@ -5,30 +5,26 @@
         <h1 class="page-title">Works</h1>
 
         <?php if (have_posts()) : ?>
-            <div class="work-grid work-grid--full">
+            <div class="poster-grid">
                 <?php while (have_posts()) : the_post();
-                    $poster_url = sa_thumbnail_url(get_the_ID(), 'medium');
-                    $work_type  = sa_field('work_type');
-                    $period     = sa_field('work_period');
+                    $poster_url = sa_thumbnail_url(get_the_ID(), 'large');
+                    $caption    = sa_field('caption_text');
                 ?>
-                    <a href="<?php the_permalink(); ?>" class="work-card">
-                        <div class="work-card__poster">
-                            <?php if ($poster_url) : ?>
-                                <img src="<?php echo esc_url($poster_url); ?>" alt="<?php the_title_attribute(); ?>">
-                            <?php else : ?>
-                                <div class="work-card__placeholder"></div>
+                    <article class="poster-card">
+                        <a href="<?php the_permalink(); ?>" class="poster-card__link">
+                            <div class="poster-card__image">
+                                <?php if ($poster_url) : ?>
+                                    <img src="<?php echo esc_url($poster_url); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy">
+                                <?php else : ?>
+                                    <div class="poster-card__placeholder"></div>
+                                <?php endif; ?>
+                            </div>
+                            <p class="poster-card__title"><?php the_title(); ?></p>
+                            <?php if ($caption) : ?>
+                                <p class="poster-card__caption"><?php echo esc_html($caption); ?></p>
                             <?php endif; ?>
-                        </div>
-                        <div class="work-card__info">
-                            <?php if ($work_type) : ?>
-                                <span class="work-card__type"><?php echo esc_html($work_type); ?></span>
-                            <?php endif; ?>
-                            <h2 class="work-card__title"><?php the_title(); ?></h2>
-                            <?php if ($period) : ?>
-                                <p class="work-card__period"><?php echo esc_html($period); ?></p>
-                            <?php endif; ?>
-                        </div>
-                    </a>
+                        </a>
+                    </article>
                 <?php endwhile; ?>
             </div>
 

@@ -4,10 +4,10 @@
 
 <main class="site-main">
 
-    <!-- 最新ニュース -->
+    <!-- Information -->
     <section class="section section--news">
         <div class="container">
-            <h2 class="section-title">News</h2>
+            <h2 class="section-title">Information</h2>
             <div class="news-grid news-grid--home">
                 <?php
                 $news_query = new WP_Query([
@@ -16,6 +16,8 @@
                     'post_status'    => 'publish',
                 ]);
                 while ($news_query->have_posts()) : $news_query->the_post();
+                    $event_label = sa_event_label();
+                    $event_date  = sa_event_date();
                 ?>
                     <article class="news-card">
                         <?php if (has_post_thumbnail()) : ?>
@@ -24,9 +26,14 @@
                             </a>
                         <?php endif; ?>
                         <div class="news-card__body">
-                            <time class="news-card__date" datetime="<?php echo get_the_date('Y-m-d'); ?>">
-                                <?php echo get_the_date('Y.m.d'); ?>
-                            </time>
+                            <div class="news-card__meta">
+                                <?php if ($event_label) : ?>
+                                    <span class="news-card__label"><?php echo esc_html($event_label); ?></span>
+                                <?php endif; ?>
+                                <time class="news-card__date" datetime="<?php echo esc_attr(get_the_date('Y-m-d')); ?>">
+                                    <?php echo esc_html($event_date); ?>
+                                </time>
+                            </div>
                             <h3 class="news-card__title">
                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                             </h3>
@@ -35,7 +42,7 @@
                 <?php endwhile; wp_reset_postdata(); ?>
             </div>
             <div class="section-more">
-                <a href="<?php echo esc_url(home_url('/news/')); ?>" class="btn-more">ニュース一覧</a>
+                <a href="<?php echo esc_url(home_url('/news/')); ?>" class="btn-more">Information一覧</a>
             </div>
         </div>
     </section>
@@ -74,11 +81,11 @@
         </div>
     </section>
 
-    <!-- ワークス -->
+    <!-- ワークス（A4ポスター一覧） -->
     <section class="section section--works">
         <div class="container">
             <h2 class="section-title">Works</h2>
-            <div class="work-grid work-grid--home">
+            <div class="poster-grid poster-grid--home">
                 <?php
                 $works = get_posts([
                     'post_type'      => 'work',
@@ -89,27 +96,23 @@
                 ]);
                 foreach ($works as $work) :
                     $poster_url = sa_thumbnail_url($work->ID, 'medium');
-                    $work_type  = sa_field('work_type', $work->ID);
-                    $period     = sa_field('work_period', $work->ID);
+                    $caption    = sa_field('caption_text', $work->ID);
                 ?>
-                    <a href="<?php echo get_permalink($work->ID); ?>" class="work-card">
-                        <div class="work-card__poster">
-                            <?php if ($poster_url) : ?>
-                                <img src="<?php echo esc_url($poster_url); ?>" alt="<?php echo esc_attr($work->post_title); ?>">
-                            <?php else : ?>
-                                <div class="work-card__placeholder"></div>
+                    <article class="poster-card">
+                        <a href="<?php echo get_permalink($work->ID); ?>" class="poster-card__link">
+                            <div class="poster-card__image">
+                                <?php if ($poster_url) : ?>
+                                    <img src="<?php echo esc_url($poster_url); ?>" alt="<?php echo esc_attr($work->post_title); ?>" loading="lazy">
+                                <?php else : ?>
+                                    <div class="poster-card__placeholder"></div>
+                                <?php endif; ?>
+                            </div>
+                            <p class="poster-card__title"><?php echo esc_html($work->post_title); ?></p>
+                            <?php if ($caption) : ?>
+                                <p class="poster-card__caption"><?php echo esc_html($caption); ?></p>
                             <?php endif; ?>
-                        </div>
-                        <div class="work-card__info">
-                            <?php if ($work_type) : ?>
-                                <span class="work-card__type"><?php echo esc_html($work_type); ?></span>
-                            <?php endif; ?>
-                            <h3 class="work-card__title"><?php echo esc_html($work->post_title); ?></h3>
-                            <?php if ($period) : ?>
-                                <p class="work-card__period"><?php echo esc_html($period); ?></p>
-                            <?php endif; ?>
-                        </div>
-                    </a>
+                        </a>
+                    </article>
                 <?php endforeach; ?>
             </div>
             <div class="section-more">

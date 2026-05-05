@@ -9,7 +9,7 @@
         <nav class="footer-nav" aria-label="フッターナビゲーション">
             <a href="<?php echo esc_url(home_url('/actors/')); ?>">アクター</a>
             <a href="<?php echo esc_url(home_url('/works/')); ?>">ワークス</a>
-            <a href="<?php echo esc_url(home_url('/news/')); ?>">ニュース</a>
+            <a href="<?php echo esc_url(home_url('/news/')); ?>">Information</a>
             <a href="<?php echo esc_url(home_url('/about/')); ?>">アバウト</a>
             <a href="<?php echo esc_url(home_url('/contact/')); ?>">コンタクト</a>
         </nav>

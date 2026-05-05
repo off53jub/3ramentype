@@ -29,7 +29,7 @@
                 'fallback_cb'    => function() {
                     echo '<ul class="nav-list">';
                     echo '<li><a href="' . home_url('/') . '">ホーム</a></li>';
-                    echo '<li><a href="' . home_url('/news/') . '">ニュース</a></li>';
+                    echo '<li><a href="' . home_url('/news/') . '">Information</a></li>';
                     echo '<li><a href="' . home_url('/actors/') . '">アクター</a></li>';
                     echo '<li><a href="' . home_url('/about/') . '">アバウト</a></li>';
                     echo '<li><a href="' . home_url('/works/') . '">ワークス</a></li>';

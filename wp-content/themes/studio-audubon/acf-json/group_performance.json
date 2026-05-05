@@ -1,50 +1,23 @@
 {
     "key": "group_performance_fields",
-    "title": "出演情報（スライダー）",
+    "title": "出演情報（バナー）",
     "fields": [
         {
-            "key": "field_cast_name",
-            "label": "キャスト名",
-            "name": "cast_name",
+            "key": "field_caption_text",
+            "label": "キャプションテキスト",
+            "name": "caption_text",
             "type": "text",
-            "instructions": "例：山田太郎",
+            "instructions": "ポスター下に表示する文言（例：山田太郎 出演 / 鈴木花子・田中一郎 出演）",
             "required": 1,
-            "placeholder": ""
-        },
-        {
-            "key": "field_role_name",
-            "label": "役名",
-            "name": "role_name",
-            "type": "text",
-            "instructions": "例：アルバス・ポッター（「役出演」は自動で付きます）",
-            "required": 1,
-            "placeholder": ""
-        },
-        {
-            "key": "field_show_title",
-            "label": "作品タイトル",
-            "name": "show_title",
-            "type": "text",
-            "instructions": "例：ハリー・ポッターと呪いの子",
-            "required": 0,
-            "placeholder": ""
-        },
-        {
-            "key": "field_show_period",
-            "label": "公演期間",
-            "name": "show_period",
-            "type": "text",
-            "instructions": "例：2024年3月1日〜3月31日",
-            "required": 0,
-            "placeholder": ""
+            "placeholder": "山田太郎 出演"
         },
         {
             "key": "field_poster_image",
             "label": "ポスター画像",
             "name": "poster_image",
             "type": "image",
-            "instructions": "作品のポスター画像をアップロードしてください（推奨サイズ：縦長 600×900px 以上）",
-            "required": 0,
+            "instructions": "A4縦向きの画像を推奨（推奨サイズ：600×848px 以上、比率 約 1:1.414）",
+            "required": 1,
             "return_format": "array",
             "preview_size": "medium",
             "library": "all"
@@ -54,7 +27,7 @@
             "label": "詳細リンク（任意）",
             "name": "show_link",
             "type": "url",
-            "instructions": "公演の公式サイト URL（入力した場合のみ「詳細を見る」ボタンが表示されます）",
+            "instructions": "公演やニュース記事のURL。設定するとポスタークリックでそのページへ遷移します。",
             "required": 0,
             "placeholder": "https://"
         }
@@ -75,5 +48,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "ホームページのヘッダースライダーに表示する出演情報を管理します。"
+    "description": "ホームのヘッダーバナーに表示するポスターとキャプションを管理します。"
 }
