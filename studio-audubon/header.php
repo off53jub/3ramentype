@@ -10,12 +10,16 @@
 
 <header class="site-header" id="siteHeader">
     <div class="header-inner">
-        <a href="<?php echo esc_url(home_url('/')); ?>" class="site-logo">
+        <a href="<?php echo esc_url(home_url('/')); ?>" class="site-logo" aria-label="<?php bloginfo('name'); ?>">
             <?php
             if (has_custom_logo()) {
                 the_custom_logo();
             } else {
-                bloginfo('name');
+                $logo_path = get_template_directory() . '/assets/images/logo.png';
+                $logo_uri  = get_template_directory_uri() . '/assets/images/logo.png';
+                if (file_exists($logo_path)) {
+                    echo '<img src="' . esc_url($logo_uri) . '" alt="' . esc_attr(get_bloginfo('name')) . '">';
+                }
             }
             ?>
         </a>
