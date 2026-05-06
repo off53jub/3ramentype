@@ -1,0 +1,59 @@
+{
+    "key": "group_actor_fields",
+    "title": "キャスト情報",
+    "fields": [
+        {
+            "key": "field_actor_name_en",
+            "label": "名前（ローマ字）",
+            "name": "actor_name_en",
+            "type": "text",
+            "instructions": "例：Taro Yamada",
+            "required": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_actor_profile",
+            "label": "プロフィール",
+            "name": "actor_profile",
+            "type": "textarea",
+            "instructions": "プロフィール文を入力してください",
+            "required": 0,
+            "rows": 6
+        },
+        {
+            "key": "field_actor_birthday",
+            "label": "生年月日",
+            "name": "actor_birthday",
+            "type": "text",
+            "instructions": "例：1995年4月1日",
+            "required": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_actor_height",
+            "label": "身長",
+            "name": "actor_height",
+            "type": "text",
+            "instructions": "例：170cm",
+            "required": 0,
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "actor"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "各キャストのプロフィール情報を管理します。顔写真は「アイキャッチ画像」からアップロードしてください。"
+}

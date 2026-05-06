@@ -18,6 +18,15 @@
         <h2> AIが送信されたラーメンの画像を識別します</h2>
         <p>画像を送信してください</p>
         
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class="flash-messages">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
         <form method="POST" enctype="multipart/form-data">
             <input class="file_choose" type="file" name="file">
             <input class="btn" value="submit!" type="submit">

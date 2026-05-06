@@ -18,6 +18,7 @@ UPLOAD_FOLDER = "uploads"
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
+app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key')
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -40,16 +41,18 @@ def upload_file():
             file.save(os.path.join(UPLOAD_FOLDER, filename))
             filepath = os.path.join(UPLOAD_FOLDER, filename)
 
-            
             img = image.load_img(filepath, target_size=(image_size,image_size))
             img = image.img_to_array(img)
             data = np.array([img])
-          
+
             result = model.predict(data)[0]
             predicted = result.argmax()
             pred_answer = "これは" + classes[predicted] +'ラーメンです'
 
             return render_template("index.html",answer=pred_answer)
+        elif file and file.filename != '':
+            flash('対応していないファイル形式です。PNG、JPG、JPEG、GIF画像をアップロードしてください。')
+            return redirect(request.url)
 
     return render_template("index.html",answer="")
 

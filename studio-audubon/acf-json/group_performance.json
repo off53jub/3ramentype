@@ -1,0 +1,52 @@
+{
+    "key": "group_performance_fields",
+    "title": "出演情報（バナー）",
+    "fields": [
+        {
+            "key": "field_caption_text",
+            "label": "キャプションテキスト",
+            "name": "caption_text",
+            "type": "text",
+            "instructions": "ポスター下に表示する文言（例：山田太郎 出演 / 鈴木花子・田中一郎 出演）",
+            "required": 1,
+            "placeholder": "山田太郎 出演"
+        },
+        {
+            "key": "field_poster_image",
+            "label": "ポスター画像",
+            "name": "poster_image",
+            "type": "image",
+            "instructions": "A4縦向きの画像を推奨（推奨サイズ：600×848px 以上、比率 約 1:1.414）",
+            "required": 1,
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all"
+        },
+        {
+            "key": "field_show_link",
+            "label": "詳細リンク（任意）",
+            "name": "show_link",
+            "type": "url",
+            "instructions": "公演やニュース記事のURL。設定するとポスタークリックでそのページへ遷移します。",
+            "required": 0,
+            "placeholder": "https://"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "performance"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "ホームのヘッダーバナーに表示するポスターとキャプションを管理します。"
+}

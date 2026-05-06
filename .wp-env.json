@@ -1,0 +1,10 @@
+{
+  "core": null,
+  "themes": ["./studio-audubon"],
+  "plugins": ["advanced-custom-fields"],
+  "env": {
+    "development": {
+      "port": 8888
+    }
+  }
+}
